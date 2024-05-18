@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 const userSchema = new Schema({
-    userName:{
+    username:{
         type:String,
         required:true,
         unique:true,
@@ -38,7 +38,6 @@ const userSchema = new Schema({
     },
     refreshToken:{
         type:String,
-        required:true
     },
     watchHistory:[
         {
