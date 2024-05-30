@@ -28,12 +28,10 @@ const videoSchema=new Schema({
     views:{
         type:Number,
         default:0,
-        required:true
     },
     isPublished:{
         type:Boolean,
         default:true,
-        required:true
     },
    
 },{timestamps:true});

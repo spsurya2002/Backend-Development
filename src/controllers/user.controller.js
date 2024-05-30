@@ -1,7 +1,7 @@
 import { asyncHandler } from "../utils/asyncHandler.js";
-import { ApiError } from "../utils/ApiError.js";
 import {User} from "../models/user.model.js";
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
+import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import jwt from "jsonwebtoken"
 
@@ -33,7 +33,7 @@ const registerUser = asyncHandler( async (req,res)=>{
      7.check for user creation
      8. return respose
    */
-    //input data
+    //input data 
     const {username,fullName,email,password}=req.body
 
     //validation for empty field
@@ -52,23 +52,24 @@ const registerUser = asyncHandler( async (req,res)=>{
       throw new ApiError(409,"User  already exists!!")
     }
     const avatarLocalPath =  req.files?.avatar[0]?.path;
-
+    
     // const coverImageLocalPath =  req.files?.coverImage[0]?.path;
     let coverImageLocalPath;
     if (req.files && Array.isArray(req.files.coverImage) && req.files.coverImage.length > 0) {
-        coverImageLocalPath = req.files.coverImage[0].path
+      coverImageLocalPath = req.files.coverImage[0].path
     }
     // //check for avatar
     
     if (!avatarLocalPath) {
-        throw new ApiError(400,"Avatar file is required")
+      throw new ApiError(400,"Avatar file is required")
     }
     // //upload them to cloudinary
     const avatar = await uploadOnCloudinary(avatarLocalPath);
     const coverImage = await uploadOnCloudinary(coverImageLocalPath);
     if(!avatar){
-      throw new ApiError(400,"Avatar file is required") 
+      throw new ApiError(400,"failure occured at upload on cloudinary!!")
     }
+   
     // create user object and upload in db
     const user =  await  User.create({
       fullName,
@@ -266,7 +267,7 @@ const updateAccountDetails = asyncHandler( async (req,res)=>{
 
 })
 
-const updatAvatar = asyncHandler( async (req,res)=>{
+const updateAvatar = asyncHandler( async (req,res)=>{
       
       const avatarLocalPath = req.file?.path
 
@@ -296,7 +297,7 @@ const updatAvatar = asyncHandler( async (req,res)=>{
       
 })
 
-const updatcoverImage = asyncHandler( async (req,res)=>{
+const updatecoverImage = asyncHandler( async (req,res)=>{
       
   const coverImageLocalPath = req.file?.path
 
@@ -334,7 +335,6 @@ export {
   changeCurrentPassword,
   getCurrentUser,
   updateAccountDetails,
-  updatAvatar,
-  updatcoverImage
-
+  updateAvatar,
+  updatecoverImage,
 }
