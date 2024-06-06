@@ -26,4 +26,9 @@ router.route("/upload-video").post(
     ]),
     publishAVideo )
 
+router.route("/get-video-ByID/:videoId").get(getVideoById);    
+router.route("/get-all-videos").get(getAllVideos);  
+router.route("/delete-video/:videoId").post(deleteVideo);  
+router.route("/update-video/:videoId").post(upload.single("thumbnail"),updateVideo);  
+
 export default router 
